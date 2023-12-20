@@ -1,16 +1,15 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins="http://localhost:3000")
 
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
         user_message = data.get('message', '')
-        # Process user_message and get your bot's response
-        # You can replace this with your actual chatbot logic
-        bot_response = "Hello! I'm your chatbot. You said: {}".format(user_message)
-
+        bot_response = "Hello! I'm your chatbot."
         response = {'answer': bot_response}
         return jsonify(response), 200
     except Exception as e:

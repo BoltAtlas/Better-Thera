@@ -13,33 +13,32 @@ function Thera() {
       return;
     }
 
-    const ms1 = { name: 'User', message: text };
-    setMessages([...messages, ms1]);
-
-    fetch('http://127.0.0.1:5000/predict', {
+    const userMessage = { name: 'User', message: text };
+    const theramessage = await fetch('http://127.0.0.1:5000/predict', {
       method: 'POST',
-      body: JSON.stringify({ message: text }),
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ message: text }),
     })
       .then((response) => response.json())
-      .then((response) => {
-        const msg2 = { name: 'Thera', message: response.answer };
-        setMessages([...messages, msg2]);
-        setText('');
-      })
+      .then((response) => ({ name: 'Thera', message: response.answer }))
       .catch((error) => {
         console.error('Error:', error);
-        setText('');
+        return { name: 'Thera', message: 'An error occurred' };
       });
+
+    setMessages([...messages, userMessage, theramessage]);
+    setText('');
   };
 
+
+
   const updateChatText = () => {
+    const messagesDiv = document.getElementById('chatMessageDiv');
+
     return messages
       .slice()
-      .reverse()
       .map((item, index) => (
         <div
           key={index}
@@ -47,7 +46,10 @@ function Thera() {
         >
           {item.message}
         </div>
-      ));
+      ))
+      .concat(
+        <div key="scrollToBottomRef" ref={(el) => el && el.scrollIntoView({ behavior: 'smooth' })} />
+      );
   };
 
   return (

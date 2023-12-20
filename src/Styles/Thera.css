@@ -49,13 +49,13 @@ body {
 
   /* Dynamically generated class names based on message type */
   .messages__item--thera {
-    background-color: #f0f0f0;
+    background-color: #f78480;
     margin-right: auto;
   }
 
   .messages__item--user {
     left: 100px;
-    background-color: #e0e0e0;
+    background-color: #bcb4fb;
     margin-left: auto;
   }
 
