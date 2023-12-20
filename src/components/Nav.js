@@ -59,10 +59,10 @@ window.addEventListener('resize', showButton);
                     <a href='https://www.linkedin.com/in/trishal-pandey-908b7b236/'className='drop_items'>
                       Trishal Pandey
                     </a>
-                    <a href='https://github.com/BoltAtlas'className='drop_items'>
+                    <a href='https://www.linkedin.com/in/s-ahmed-naushad-7423arato/'className='drop_items'>
                        Syed Ahmed Naushad 
                     </a>
-                    <Link to='/' className='drop_items'>
+                    <Link to='https://www.linkedin.com/in/yashrajmathur24/' className='drop_items'>
                       Yash Raj mathur
                     </Link>
                   </ul>}

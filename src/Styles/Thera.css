@@ -1,10 +1,13 @@
+body {
+    background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
 
+}
 
 .chatbox {
     display: -ms-inline-grid;
     height: 735px;
     margin: 50px;
-    border: 10px solid;
+    border: 10px solid aqua;
     border-radius: 10px;
 }
 
@@ -15,19 +18,46 @@
     height: 10%;
 }
 
-img {
+/* img {
     border-radius: 80px;
     margin: 10px;
-}
+    width: 20%;
+} */
 
 .Chatheadtext {
     font-size: xx-large;
     color: azure;
+    margin-left: 43%;
+    align-self: center;
 }
 
 .Chatmessage {
+    background-color: aliceblue;
     height: 80%;
+    overflow:scroll;
 }
+
+.messages__item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: rgb(255, 255, 255);
+    max-width: 60.6%;
+    width: fit-content;
+    margin: 10px 15px 10px 15px;
+    border-radius: 5px;
+  }
+
+  /* Dynamically generated class names based on message type */
+  .messages__item--thera {
+    background-color: #f0f0f0;
+    margin-right: auto;
+  }
+
+  .messages__item--user {
+    left: 100px;
+    background-color: #e0e0e0;
+    margin-left: auto;
+  }
 
 .chatfoot {
     background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);    padding: 10px;
@@ -42,7 +72,7 @@ input {
     margin: 5px 5px 0px 30px;
     width: 90%;
     height: 90%;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 .classfootbutton {
     border-radius:3px;

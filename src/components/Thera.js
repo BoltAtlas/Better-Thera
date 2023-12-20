@@ -1,67 +1,79 @@
 import React, { useState } from 'react';
 import { Button } from './Button';
-import "../Styles/Thera.css";
-
-
-
+import '../Styles/Thera.css';
 
 function Thera() {
+  const [messages, setMessages] = useState([]);
+  const [text, setText] = useState('');
 
-    const [Input, setInput] = useState({
-        Message: ""
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleInput = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-        console.log(name,value);
-        setInput({...Input,[name]:value});
+    if (text === '') {
+      return;
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const ms1 = { name: 'User', message: text };
+    setMessages([...messages, ms1]);
 
-        try {
-          await fetch('http://localhost:5000/submit', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ user_input: Input }),
-          });
+    fetch('http://127.0.0.1:5000/predict', {
+      method: 'POST',
+      body: JSON.stringify({ message: text }),
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        const msg2 = { name: 'Thera', message: response.answer };
+        setMessages([...messages, msg2]);
+        setText('');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setText('');
+      });
+  };
 
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      };
+  const updateChatText = () => {
+    return messages
+      .slice()
+      .reverse()
+      .map((item, index) => (
+        <div
+          key={index}
+          className={`messages__item messages__item--${item.name.toLowerCase()}`}
+        >
+          {item.message}
+        </div>
+      ));
+  };
 
-    return (
-        <>
-            <div className="chatbox">
-                <div className="Chathead">
-                    <div className="ChatheadImage">
-                        <img src="/Images/Therabeta.png" alt="thera"/>
-                    </div>
-                    <div className="Chatheadtext">
-                        Chat away!
-                    </div>
-                </div>
-                <div className="Chatmessage">
-                </div>
-                <form type="submit" onSubmit={handleSubmit} className="chatfoot">
-                    <label htmlFor="Message"></label>
-                    <input type="text" autoComplete='off'
-                    placeholder='Write here'
-                    value={Input.Message}
-                    onChange={handleInput}
-                    name="Message" id="Message"/>
-                <Button type="submit" buttonStyle='btn--outline'>
-                        Send
-                </Button>
-                </form>
-            </div>
-        </>
-    )
+  return (
+    <>
+      <div className="chatbox">
+        <div className="Chathead">
+          <div className="Chatheadtext">Welcome to Thera</div>
+        </div>
+        <div className="Chatmessage">{updateChatText()}</div>
+        <form onSubmit={handleSubmit} className="chatfoot">
+          <label htmlFor="Message"></label>
+          <input
+            type="text"
+            autoComplete="off"
+            placeholder=" Write here...."
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyUp={(e) => e.key === 'Enter'}
+          />
+          <Button type="submit" buttonStyle="btn--outline">
+            Send
+          </Button>
+        </form>
+      </div>
+    </>
+  );
 }
 
 export default Thera;
